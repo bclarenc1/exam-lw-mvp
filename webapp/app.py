@@ -3,7 +3,7 @@ import os
 import streamlit as st
 import requests
 
-api_url = st.secrets["API_BASE_URL"]
+api_url = st.secrets["API_URL"]
 assert api_url is not None, "Oops, environment variable 'API_URL' is not defined. Please complain to the dev"
 # api_url="http://localhost:8000"
 
