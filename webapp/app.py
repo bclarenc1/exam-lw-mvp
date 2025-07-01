@@ -3,7 +3,9 @@ import os
 import streamlit as st
 import requests
 
-from dotenv import load_dotenv; load_dotenv()
+api_url = st.secrets["API_BASE_URL"]
+assert api_url is not None, "Oops, environment variable 'API_URL' is not defined. Please complain to the dev"
+# api_url="http://localhost:8000"
 
 st.title("Iris predictor")
 
@@ -12,14 +14,10 @@ sw = st.slider('Sepal width',  min_value=0., max_value=5., value=3., step=.1)
 pl = st.slider('Petal length', min_value=0., max_value=7., value=4., step=.1)
 pw = st.slider('Petal width',  min_value=0., max_value=3., value=1., step=.1)
 
-API_URL = os.environ.get('API_URL')
-assert API_URL is not None, "Oops, environment variable 'API_URL' is not defined. Please complain to the dev"
-# API_URL="http://localhost:8000"
-
 
 try:
     response = requests.get(
-        f"{API_URL}/predict?sepal_length={sl}&sepal_width={sw}&petal_length={pl}&petal_width={pw}",
+        f"{api_url}/predict?sepal_length={sl}&sepal_width={sw}&petal_length={pl}&petal_width={pw}",
         timeout=15)  # timeout is in seconds
     if response.status_code == 200:
         prediction = response.json()["prediction"]
